@@ -25,19 +25,24 @@ void ofxGstV4L2Sink::setup(int w, int h, int dev){
     width = w;
     height = h;
     device = dev;
+#if GST_VERSION_MAJOR==0
 	string appsrc = "appsrc  name=video_src is-live=true do-timestamp=true ! "
-				"video/x-raw,width=" + ofToString(width) + ",height=" + ofToString(height) + ",depth=24,bpp=24,framerate=30/1,endianness=4321,red_mask=16711680, green_mask=65280, blue_mask=255 ! queue ! ";
+				"video/x-raw-rgb,width=" + ofToString(width) + ",height=" + ofToString(height) + ",depth=24,bpp=24,framerate=30/1,endianness=4321,red_mask=16711680, green_mask=65280, blue_mask=255 ! queue ! ";
+#else
+	string appsrc = "appsrc  name=video_src is-live=true do-timestamp=true ! "
+				"video/x-raw,format=RGB,width=" + ofToString(width) + ",height=" + ofToString(height) + ",depth=24,bpp=24,framerate=30/1,endianness=4321,red_mask=16711680, green_mask=65280, blue_mask=255 ! queue ! ";
+#endif
 	string videorate;//  = "videorate ! video/x-raw-rgb,depth=24,bpp=24,framerate=25/2,endianness=4321,red_mask=16711680, green_mask=65280, blue_mask=255 ! ";
 	string videoscale;// = "videoscale ! video/x-raw-rgb,width=" + ofToString(width) + ",height=" + ofToString(height) + ",depth=24,bpp=24,endianness=4321,red_mask=16711680, green_mask=65280, blue_mask=255 ! ";
 #if GST_VERSION_MAJOR==0
 	string colorspace = " ffmpegcolorspace ! video/x-raw-yuv,width=" + ofToString(width) + ",height=" + ofToString(height) + " ! ";
 #else
-	string colorspace = " videoconvert ! video/x-raw,width=" + ofToString(width) + ",height=" + ofToString(height) + " ! ";
+	string colorspace = " videoconvert ! video/x-raw,format=YUY2,width=" + ofToString(width) + ",height=" + ofToString(height) + " ! ";
 #endif
 
-	string pipeline = appsrc + videorate + videoscale + colorspace + " v4l2sink device=/dev/video" + ofToString(device);
+	string pipeline = appsrc + videorate + videoscale + colorspace + " v4l2sink name=video_sink device=/dev/video" + ofToString(device);
 
-	gst.setPipelineWithSink(pipeline,"v4l2sink",false);
+	gst.setPipelineWithSink(pipeline,"video_sink",false);
 	gstSrc = (GstAppSrc*)gst_bin_get_by_name(GST_BIN(gst.getPipeline()),"video_src");
 	if(gstSrc){
 		gst_app_src_set_stream_type (gstSrc,GST_APP_STREAM_TYPE_STREAM);

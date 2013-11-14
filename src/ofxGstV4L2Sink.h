@@ -22,8 +22,7 @@ public:
     int height;
     int device;
     ofPixels pixels;
-	void setup(int w, int h);
-	void setup(int w, int h, int dev);
+	void setup(int w, int h, int dev=0);
 	void update(ofPixels & pixels);
 
 private:

@@ -51,6 +51,7 @@ void ofxGstV4L2Sink::setup(int w, int h, int dev){
 
 	pixels.allocate(w,h,OF_IMAGE_COLOR);
 
+    gst.startPipeline();
 	gst.play();
 }
 

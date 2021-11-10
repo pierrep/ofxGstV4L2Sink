@@ -23,7 +23,8 @@ public:
     int device;
     ofPixels pixels;
 	void setup(int w, int h, int dev=0);
-	void update(ofPixels & pixels);
+    bool update(ofPixels & pixels);
+    void close();
 
 private:
 	ofGstVideoUtils gst;

@@ -22,7 +22,7 @@ ofxGstV4L2Sink::~ofxGstV4L2Sink() {
     ofLogNotice() << "ofxGstV4L2Sink destructor started...";
 
     if(gstSrc) {
-        //gst_app_src_end_of_stream (GST_APP_SRC (gstSrc));
+        gst_app_src_end_of_stream (GST_APP_SRC (gstSrc));
         gst.close();
     }
 }
@@ -46,12 +46,10 @@ void ofxGstV4L2Sink::setup(int w, int h, int dev){
     string colorspace = " videoconvert ! video/x-raw,format=YUY2,width=" + ofToString(width) + ",height=" + ofToString(height) + ",framerate=30/1 ! ";
 #endif
 
-
     string ww = ofToString(width);
     string hh = ofToString(height);
     string incaps = "video/x-raw, format=RGB, width="+ww+", height="+hh;
     string outcaps = "video/x-raw, format=YUY2, width="+ww+", height="+hh;
-    //string pipeline = "appsrc name=video_src is-live=true do-timestamp=true caps=\""+incaps+"\" ! videoconvert ! " + outcaps + " ! videoconvert ! v4l2sink name=video_sink device=/dev/video" + ofToString(device);
     string pipeline = "appsrc name=video_src is-live=true do-timestamp=true caps=\""+incaps+"\" ! videoconvert ! " + outcaps + " ! v4l2sink name=video_sink device=/dev/video" + ofToString(device);
     ofLogNotice() << "Pipeline = " << pipeline;
 

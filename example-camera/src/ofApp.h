@@ -32,5 +32,5 @@ class ofApp : public ofBaseApp{
         int camWidth;
         int camHeight;
 
-        ofxGstV4L2Sink outputSink;
+        ofxGstV4L2Sink virtualCamera;
 };

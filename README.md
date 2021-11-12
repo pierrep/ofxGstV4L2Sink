@@ -1,5 +1,5 @@
 
-This addon turns your OF app into a virtual "Video4Linux2" (V4L2) camera.
+This addon turns your openFrameworks app into a virtual "Video4Linux2" (V4L2) camera.
 It allows you to send the output of an OF application to any other application that supports V4L2 devices.
 Example uses are any applications that support a V4L2 camera, e.g. Zoom, Microsoft Teams, etc
 

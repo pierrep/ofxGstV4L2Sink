@@ -20,6 +20,7 @@ then pass your pixels to the loopback device:
 ```
 virtualCam.update(myPixels);
 ```
+Currently this addon converts the RGB pixel data you provide it to the YUYV pixel format, which should be recognised by most cameras.
 
 ## SETUP THE LOOPBACK DEVICE
 To install the loopback device on Ubuntu:
